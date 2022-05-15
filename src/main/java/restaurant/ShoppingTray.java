@@ -16,6 +16,17 @@ public class ShoppingTray {
     }
 
     public void update(Dish dish, int quantity) {
+        // can only do changes if the status is OPEN
+        if (this.status != StatusTray.OPEN || quantity <= 0) {
+            return;
+        }
+
+        // if we already have this dish, just update quantity
+        Integer previousQuantity = this.shoppingTray.get(dish);
+        if (previousQuantity != null && previousQuantity + quantity > 0) {
+            quantity += previousQuantity;
+        }
+
         this.shoppingTray.put(dish, quantity);
     }
 
