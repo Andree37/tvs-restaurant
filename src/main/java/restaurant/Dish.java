@@ -12,22 +12,24 @@ public class Dish {
     private static final int MAX_PRICE = 15;
 
     private final String name;
-    private String description;
-    private boolean isVegetarian;
+    private final String description;
+    private final boolean isVegetarian;
+    private final Restaurant restaurant;
     private int price;
-    private Restaurant restaurant;
 
     /**
      * Creates a dish with a given name, description, whether it is vegetarian, it's
      * price and the restaurant
-     * 
-     * @param name
-     * @param description
-     * @param isVegetarian
-     * @param price
-     * @param r
+     *
+     * @param name         the name of the dish
+     * @param description  the description of the dish
+     * @param isVegetarian whether the dish is vegetarian
+     * @param price        the price of the dish
+     * @param r            the restaurant that serves the dish
      */
     public Dish(String name, String description, boolean isVegetarian, int price, Restaurant r) {
+        if (name == null || name.length() < 2 || name.length() > 5)
+            throw new IllegalArgumentException("Invalid name");
         this.name = name;
         this.description = description;
         this.isVegetarian = isVegetarian;
@@ -36,29 +38,29 @@ public class Dish {
     }
 
     /**
-     * @returns the name of this dish
+     * @return the name of this dish
      **/
     public String getName() {
         return this.name;
     }
 
     /**
-     * @returns the restaurant related to this dish
+     * @return the Restaurant of this dish
      **/
     public Restaurant getRestaurant() {
         return this.restaurant;
     }
 
     /**
-     * @returns the price of this dish
+     * @return the price of this dish
      **/
     public int getPrice() {
         return this.price;
     }
 
     /**
-     * Sets the new price of the dish
-     * 
+     * Sets the price of this dish
+     *
      * @param newPrice the new price of the dish
      */
     void setPrice(int newPrice) throws IllegalArgumentException {
@@ -69,24 +71,19 @@ public class Dish {
     }
 
     /**
-     * @returns the description of this dish
+     * @return the description of this dish
      **/
     public String getDescription() {
         return this.description;
     }
 
     /**
-     * @returns whether this dish is vegetarian or not
+     * @return whether this dish is vegetarian or not
      **/
     public boolean isVegetarian() {
         return this.isVegetarian;
     }
 
-    public Dish(String name) {
-        if (name == null || name.length() < 2 || name.length() > 5)
-            throw new IllegalArgumentException("no name");
-        this.name = name;
-    }
 
     @Override
     public int hashCode() {
@@ -100,6 +97,6 @@ public class Dish {
         if (o == null || getClass() != o.getClass())
             return false;
         Dish dish = (Dish) o;
-        return name == dish.name;
+        return Objects.equals(name, dish.name);
     }
 }

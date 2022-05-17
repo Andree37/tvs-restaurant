@@ -1,3 +1,7 @@
+/**
+ * This class represents a client that has a name, an email and an address
+ * It can also have a tax identification number
+ **/
 
 package restaurant;
 
@@ -8,36 +12,70 @@ public class Client {
     private final String email;
     private int taxNumber;
 
+    /**
+     * Creates a new Client with a given name and email
+     *
+     * @param name  name of the client
+     * @param email email of the client
+     */
     public Client(String name, String email) {
-        this.name = name;
-        this.email = email;
-        this.taxNumber = -1;
+        this(name, email, -1);
     }
 
-    public void setIdentificationNumber(int taxNumber) {
+    /**
+     * Creates a new Client with a given name, email and tax Identification number
+     *
+     * @param name      name of the client
+     * @param email     email of the client
+     * @param taxNumber tax identification number of the client
+     */
+    public Client(String name, String email, int taxNumber) {
+        this.name = name;
+        this.email = email;
         this.taxNumber = taxNumber;
     }
 
+    /**
+     * @return the tax identification number of the client
+     */
     public int getIdentificationNumber() {
         return this.taxNumber;
     }
 
+    /**
+     * Sets the client's tax identification number
+     *
+     * @param taxNumber the new tax identification number
+     */
+    public void setIdentificationNumber(int taxNumber) {
+        this.taxNumber = taxNumber;
+    }
+
+    /**
+     * @return the name of the client
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * @return the email of the client
+     */
     public String getEmail() {
         return this.email;
     }
 
-    // returns the total value of shopping made by this client in the last 365 days
+    /**
+     * @return the total value of shopping made by this client in the last 365 days
+     */
     public float getAccumulatedShoppings() {
+        // TODO THIS IDK WHAT TO DO
         return 1;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, email);
+        return Objects.hash(email);
     }
 
     @Override
@@ -47,6 +85,6 @@ public class Client {
         if (o == null || getClass() != o.getClass())
             return false;
         Client client = (Client) o;
-        return Objects.equals(name, client.name) && Objects.equals(email, client.email);
+        return Objects.equals(email, client.email);
     }
 }
