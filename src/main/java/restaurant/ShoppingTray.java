@@ -81,7 +81,7 @@ public class ShoppingTray {
      * @param d the discount to be applied
      */
     public void applyDiscount(int d) { // it is Discount d on the project description why?
-        this.discount = d; // should the discount be a class? talk to teacher
+        this.discount = d; // TODO should the discount be a class? talk to teacher
     }
 
     /**

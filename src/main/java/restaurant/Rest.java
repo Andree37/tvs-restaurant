@@ -92,10 +92,23 @@ public class Rest {
      *
      * @param c    client to be discounted
      * @param tray of dishes from a restaurant
-     * @return the discount that the client has
+     * @return the discount that the client has. Integer between 0 and 100 that represents the value of the discount to be applied
      */
     public int computeDiscount(Client c, ShoppingTray tray) {
-        // idk
+
+        // if tray.computePrice() > 200 && c.purchaseHistory() > 2000 -> 15%
+        // if tray.computePrice() > 200 && c.purchaseHistory() <= 2000 -> 10%
+
+        // if 100 <= tray.computePrice() <= 200 && c.purchaseHistory > 2000 -> 7%
+        // if 100 <= tray.computePrice() <= 200 && c.purchaseHistory <= 2000 && tray.getContent().size() <= 3 -> 5%
+        // if 100 <= tray.computePrice() <= 200 && c.purchaseHistory <= 2000 && tray.getContent().size() > 3 -> 3%
+
+        // if tray.computePrice() < 100 && c.purchaseHistory <= 2000 -> 0%
+        // if tray.computePrice() < 100 && c.purchaseHistory >= 2000 && tray.getContent().size() > 10 -> 2%
+        // if 3 < tray.getContent().size() <= 19 -> 3%
+        // if tray.getContent().size() <= 3 -> 4%
+
+        // please validate this
         return 0;
     }
 }
