@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class ShoppingTray {
 
-    private Map<Dish, Integer> shoppingTray;
+    private final Map<Dish, Integer> shoppingTray;
     private StatusTray status;
     private int discount;
 
@@ -17,7 +17,7 @@ public class ShoppingTray {
 
     public void update(Dish dish, int quantity) {
         // can only do changes if the status is OPEN
-        if (this.status != StatusTray.OPEN || quantity <= 0) {
+        if (this.status != StatusTray.OPEN || quantity == 0) {
             return;
         }
 
@@ -27,11 +27,30 @@ public class ShoppingTray {
             quantity += previousQuantity;
         }
 
-        this.shoppingTray.put(dish, quantity);
+        if (quantity == 0) {
+            this.shoppingTray.remove(dish);
+
+        } else {
+            this.shoppingTray.put(dish, quantity);
+        }
     }
 
     public void checkout() {
-        this.status = StatusTray.CONFIRMED;
+        if (shoppingTray.isEmpty()) {
+            // throw an error
+            return;
+        }
+        switch (this.status) {
+            case OPEN:
+                this.status = StatusTray.CLOSED;
+                break;
+            case CLOSED:
+                this.status = StatusTray.CONFIRMED;
+                break;
+            default:
+                // throw error
+                break;
+        }
     }
 
     public void applyDiscount(int d) { // it is Discount d on the project description why?
@@ -41,11 +60,22 @@ public class ShoppingTray {
     public void pay() {
         if (this.status == StatusTray.CONFIRMED) {
             this.status = StatusTray.PAID;
+        } else {
+            // throw exception
         }
     }
 
     public void cancel() {
-        this.status = StatusTray.OPEN;
+        switch (this.status) {
+            case CLOSED:
+            case CONFIRMED:
+                this.status = StatusTray.OPEN;
+                break;
+            default:
+                // throw error
+                break;
+        }
+        // if here throw error of invalid state
     }
 
     public int computePrice() {
@@ -57,7 +87,11 @@ public class ShoppingTray {
     }
 
     public void abort() {
-        this.status = StatusTray.CANCELED;
+        if (this.status == StatusTray.CONFIRMED) {
+            this.status = StatusTray.CANCELED;
+        } else {
+            // throw expection
+        }
     }
 
     public StatusTray getStatus() {

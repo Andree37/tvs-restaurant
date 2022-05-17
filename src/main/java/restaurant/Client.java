@@ -6,12 +6,12 @@ import java.util.Objects;
 public class Client {
     private final String name;
     private final String email;
-    private Integer taxNumber;
+    private int taxNumber;
 
     public Client(String name, String email) {
         this.name = name;
         this.email = email;
-        this.taxNumber = null;
+        this.taxNumber = -1;
     }
 
     public void setIdentificationNumber(int taxNumber) {
@@ -47,6 +47,6 @@ public class Client {
         if (o == null || getClass() != o.getClass())
             return false;
         Client client = (Client) o;
-        return name == client.name && email == client.email;
+        return Objects.equals(name, client.name) && Objects.equals(email, client.email);
     }
 }

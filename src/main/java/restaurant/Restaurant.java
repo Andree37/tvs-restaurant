@@ -19,9 +19,9 @@ public class Restaurant {
     private static final int MIN_DISHES = 6;
     private static final int MAX_DISHES = 17;
 
-    private String name;
+    private final String name;
     private final String address;
-    private Set<Dish> dishes;
+    private final Set<Dish> dishes;
     private boolean isVegetarian;
 
     /**
@@ -63,7 +63,7 @@ public class Restaurant {
         return null;
     }
 
-    private int getFreeDishes(List<Dish> dishes) {
+    private int getFreeDishes(Set<Dish> dishes) {
         int counter = 0;
         for (Dish d : dishes) {
             if (d.getPrice() == 0) {
@@ -112,7 +112,7 @@ public class Restaurant {
         if (!enoughDishesSize(this.dishes.size() + 1)) {
             throw new InvalidInvocationException();
         }
-        if (price == 0 && doesExceedFreeDishes(getFreeDishes(new ArrayList<>(this.dishes)) + 1)) {
+        if (price == 0 && doesExceedFreeDishes(getFreeDishes(this.dishes) + 1)) {
             // cannot have more free dishes
             throw new InvalidInvocationException();
         }
@@ -142,7 +142,7 @@ public class Restaurant {
         Dish d = getDishByName(dishName);
         // if dish is not free and we are removing, we have to ensure that we don't go
         // over the quarter of free dishes
-        if (d.getPrice() != 0 && doesExceedFreeDishes(getFreeDishes(new ArrayList<>(this.dishes)) - 1)) {
+        if (d == null || d.getPrice() != 0 && doesExceedFreeDishes(getFreeDishes(this.dishes) - 1)) {
             throw new InvalidInvocationException();
         }
 

@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Dish {
     private static final int MAX_PRICE = 15;
 
-    private String name;
+    private final String name;
     private String description;
     private boolean isVegetarian;
     private int price;
@@ -62,7 +62,7 @@ public class Dish {
      * @param newPrice the new price of the dish
      */
     void setPrice(int newPrice) throws IllegalArgumentException {
-        if (newPrice < MAX_PRICE || newPrice < 0) {
+        if (newPrice > MAX_PRICE || newPrice < 0) {
             throw new IllegalArgumentException();
         }
         this.price = newPrice;

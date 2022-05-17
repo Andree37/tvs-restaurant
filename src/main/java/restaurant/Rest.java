@@ -7,8 +7,8 @@ import java.util.Set;
 
 public class Rest {
     private String name;
-    private Set<Client> clients;
-    private Set<Restaurant> restaurants;
+    private final Set<Client> clients;
+    private final Set<Restaurant> restaurants;
 
     public Rest(String name) {
         this.name = name;
