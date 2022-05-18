@@ -12,7 +12,7 @@ public class ShoppingTray {
 
     private final Map<Dish, Integer> shoppingTray;
     private StatusTray status;
-    private int discount;
+    private Discount discount;
 
     /**
      * Creates a new empty shopping tray with the initial status as open and no discount
@@ -20,7 +20,7 @@ public class ShoppingTray {
     public ShoppingTray() {
         this.shoppingTray = new HashMap<>();
         this.status = StatusTray.OPEN;
-        this.discount = 0;
+        this.discount = Discount.forZeroDiscount();
     }
 
     /**
@@ -80,8 +80,8 @@ public class ShoppingTray {
      *
      * @param d the discount to be applied
      */
-    public void applyDiscount(int d) { // it is Discount d on the project description why?
-        this.discount = d; // TODO should the discount be a class? talk to teacher
+    public void applyDiscount(Discount d) {
+        this.discount = d;
     }
 
     /**
@@ -122,7 +122,7 @@ public class ShoppingTray {
             // the dish price * the amount of dishes
             sum += entry.getKey().getPrice() * entry.getValue();
         }
-        return sum - this.discount;
+        return this.discount.calculatePriceWithDiscount(sum);
     }
 
     /**
