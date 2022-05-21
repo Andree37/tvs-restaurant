@@ -121,22 +121,22 @@ public class Restaurant {
      * @return true if it successfully inserted or updated a dish, false otherwise
      * @throws InvalidInvocationException If adding the dish goes over the amount that the restaurant can hold or if it goes over the amount of free dishes it can have
      */
-    public boolean addDish(Dish d, int price) throws InvalidInvocationException {
+    public boolean addDish(Dish d, int price)  {
 
         // check whether we can add a new dish and maintain within the maximum dishes
         if (isInvalidAmountOfDishes(this.dishes.size() + 1)) {
-            throw new InvalidInvocationException();
+            return false;
         }
         if (price == 0 && doesExceedFreeDishes(getFreeDishes(this.dishes) + 1)) {
             // cannot have more free dishes
-            throw new InvalidInvocationException();
+            return false;
         }
 
         // if we already have a dish with this name, we just update the price
         for (Dish td : this.dishes) {
             if (td.equals(d)) {
                 td.setPrice(price);
-                return true;
+                return false;
             }
         }
 
