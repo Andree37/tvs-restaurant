@@ -17,7 +17,7 @@ public class Restaurant {
 
     private final String name;
     private final String address;
-    private final Set<Dish> dishes;
+    private final List<Dish> dishes;
     private boolean isVegetarian;
 
     /**
@@ -29,15 +29,20 @@ public class Restaurant {
      * @param address address of the restaurant
      * @param dishes  a list of dishes that have to be at least 6 and at most 17 different dishes (represented by their name)
      */
-    public Restaurant(String name, String address, List<Dish> dishes) throws IllegalArgumentException {
+    public Restaurant(String name, String address, List<Dish> dishes) throws InvalidInvocationException {
         if (dishes == null || isInvalidAmountOfDishes(dishes.size())) {
-            throw new IllegalArgumentException();
+            throw new InvalidInvocationException();
+        }
+
+        this.dishes = dishes;
+
+        if (doesExceedFreeDishes(getFreeDishes(dishes))) {
+            throw new InvalidInvocationException();
         }
 
         this.name = name;
         this.address = address;
 
-        this.dishes = new HashSet<>(dishes);
         this.isVegetarian = false;
     }
 
@@ -56,7 +61,7 @@ public class Restaurant {
         return null;
     }
 
-    private int getFreeDishes(Set<Dish> dishes) {
+    private int getFreeDishes(List<Dish> dishes) {
         int counter = 0;
         for (Dish d : dishes) {
             if (d.getPrice() == 0) {
@@ -125,7 +130,7 @@ public class Restaurant {
 
         // check whether we can add a new dish and maintain within the maximum dishes
         if (isInvalidAmountOfDishes(this.dishes.size() + 1)) {
-            return false;
+            throw new InvalidInvocationException("Restaurant exceeded amount of dishes");
         }
         if (price == 0 && doesExceedFreeDishes(getFreeDishes(this.dishes) + 1)) {
             // cannot have more free dishes

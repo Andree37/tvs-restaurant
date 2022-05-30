@@ -81,6 +81,9 @@ public class ShoppingTray {
      * @param d the discount to be applied
      */
     public void applyDiscount(Discount d) {
+        if (this.status != StatusTray.CLOSED) {
+            throw new InvalidInvocationException("Cannot apply discount for ShoppingTray with status: " + this.status);
+        }
         this.discount = d;
     }
 
@@ -117,6 +120,9 @@ public class ShoppingTray {
      * @return the total price of the dishes
      */
     public int computePrice() {
+        if (this.status == StatusTray.CANCELED) {
+            throw new InvalidInvocationException("Cannot compute price for ShoppingTray with status: " + this.status);
+        }
         int sum = 0;
         for (Map.Entry<Dish, Integer> entry : this.shoppingTray.entrySet()) {
             // the dish price * the amount of dishes

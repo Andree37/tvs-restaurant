@@ -14,7 +14,7 @@ public class Dish {
     private final String name;
     private final String description;
     private final boolean isVegetarian;
-    private final Restaurant restaurant;
+    private Restaurant restaurant;
     private int price;
 
     /**
@@ -35,6 +35,15 @@ public class Dish {
         this.isVegetarian = isVegetarian;
         this.price = price;
         this.restaurant = r;
+    }
+
+    public Dish(String name, String description, boolean isVegetarian, int price) {
+        if (name == null || name.length() < 2 || name.length() > 5)
+            throw new IllegalArgumentException("Invalid name");
+        this.name = name;
+        this.description = description;
+        this.isVegetarian = isVegetarian;
+        this.price = price;
     }
 
     /**
